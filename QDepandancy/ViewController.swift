@@ -41,9 +41,9 @@ class ViewController: UIViewController {
             parseOperation.setFetchDataWith(data: fetchOperation.dataFetched)
         }
         
-        let completionBlock = BlockOperation {
-            print("This is complete")
-        }
+//        let completionBlock = BlockOperation {
+//            print("This is complete")
+//        }
         
         adapter.addDependency(fetchOperation)
         parseOperation.addDependency(adapter)
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         completionBlock.addDependency(adapter)
         completionBlock.addDependency(parseOperation)*/
         
-        operationQueue.addOperations([fetchOperation, adapter, parseOperation, completionBlock], waitUntilFinished: false)
+        operationQueue.addOperations([fetchOperation, adapter, parseOperation], waitUntilFinished: false)
         
         /*print("End1 == \(String(describing: self.operationQueue.operationCount))")
         print("End1 == \(String(describing: self.operationQueue.operations))")
