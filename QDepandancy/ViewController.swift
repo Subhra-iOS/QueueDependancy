@@ -26,14 +26,39 @@ class ViewController: UIViewController {
         let fetchOperation : FetchOperation = FetchOperation()
         let parseOperation : ParseOperation = ParseOperation()
         
+        parseOperation.setCompletionCallback { [weak self] status in
+            
+            if status{
+                print("\(String(describing: self?.operationQueue.operationCount))")
+                print("\(String(describing: self?.operationQueue.operations))")
+            }
+            
+        }
+        
+        
         let adapter = BlockOperation { [ unowned parseOperation ,  unowned fetchOperation] in
+            print("Execute")
             parseOperation.setFetchDataWith(data: fetchOperation.dataFetched)
+        }
+        
+        let completionBlock = BlockOperation {
+            print("This is complete")
         }
         
         adapter.addDependency(fetchOperation)
         parseOperation.addDependency(adapter)
         
-        operationQueue.addOperations([fetchOperation, adapter, parseOperation], waitUntilFinished: false)
+       /* completionBlock.addDependency(fetchOperation)
+        completionBlock.addDependency(adapter)
+        completionBlock.addDependency(parseOperation)*/
+        
+        operationQueue.addOperations([fetchOperation, adapter, parseOperation, completionBlock], waitUntilFinished: false)
+        
+        /*print("End1 == \(String(describing: self.operationQueue.operationCount))")
+        print("End1 == \(String(describing: self.operationQueue.operations))")
+        operationQueue.cancelAllOperations()
+        print("End2 == \(String(describing: self.operationQueue.operationCount))")
+        print("End2 == \(String(describing: self.operationQueue.operations))")*/
         
     }
 

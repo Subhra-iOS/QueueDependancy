@@ -58,4 +58,8 @@ class AsyncOperation: Operation {
         state = .isFinished
     }
     
+    open override func cancel() {
+        state = .isFinished
+    }
+    
 }

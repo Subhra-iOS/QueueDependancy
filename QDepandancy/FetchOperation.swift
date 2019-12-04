@@ -43,6 +43,10 @@ final class FetchOperation: AsyncOperation {
         session.finishTasksAndInvalidate()
     }
     
+    override func cancel() {
+        super.cancel()
+    }
+    
     deinit {
            print("FetchOperation dealloc")
     }

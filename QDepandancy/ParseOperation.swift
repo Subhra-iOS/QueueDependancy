@@ -8,12 +8,20 @@
 
 import Foundation
 
+typealias ParseOperationCompletion = (_ status : Bool) -> Void
+
 final class ParseOperation: AsyncOperation {
 
     private(set) var dataFetched: Data?
+    
+   private(set) var completion : ParseOperationCompletion?
 
     func setFetchDataWith(data : Data?){
         self.dataFetched = data
+    }
+    
+    func setCompletionCallback(closure : @escaping (_ status : Bool) -> Void){
+        self.completion = closure
     }
     
     override func execute(){
@@ -35,7 +43,12 @@ final class ParseOperation: AsyncOperation {
         
         sleep(2)
         self.finished()
+        self.completion?(true)
     }
+    
+     override func cancel() {
+           super.cancel()
+       }
     
     deinit {
         print("ParseOperation dealloc")
