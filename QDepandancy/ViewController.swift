@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         adapter.addDependency(fetchOperation)
         parseOperation.addDependency(adapter)
         
-        operationQueue.addOperations([fetchOperation, adapter, parseOperation], waitUntilFinished: true)
+        operationQueue.addOperations([fetchOperation, adapter, parseOperation], waitUntilFinished: false)
         
     }
 
