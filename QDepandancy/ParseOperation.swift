@@ -41,9 +41,12 @@ final class ParseOperation: AsyncOperation {
             
         }
         
-        sleep(2)
-        self.finished()
-        self.completion?(true)
+        DispatchQueue.global(qos: .utility).asyncAfter(deadline: (.now() + 5.0)) { [weak self]  in
+             if let weakSelf : ParseOperation = self {
+               weakSelf.finished()
+               weakSelf.completion?(true)
+            }
+        }
     }
     
      override func cancel() {
