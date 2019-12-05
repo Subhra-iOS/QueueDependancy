@@ -21,41 +21,37 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        //self.blockOp = SRBlockOperation()
+        
        // startOperations()
        // startBlockOperation()
-        //self.blockOp = SRBlockOperation()
         startBlockExecuteOperation()
     }
     
         private func startBlockExecuteOperation(){
                 
-                let blockOp = SRBlockOperation()
+            let blockOp = SRBlockOperation()
                 
-                let fetchOperation1 : SRBlockFetchOperation = SRBlockFetchOperation { (data, state) in
-                   print("End of first Op1")
-               }
-                let fetchOperation2 : SRBlockFetchOperation = SRBlockFetchOperation { (data, state) in
-                    print("End of first Op2")
-                }
-                
-                blockOp.addDependency(fetchOperation1)
-                blockOp.addDependency(fetchOperation2)
-        
-                blockOp.completionBlock = { [weak  self] in
-                    print("End")
-                    print("Operation Object Array == \(String(describing: self?.operationQueue.operations))")
-                }
-           
-            self.operationQueue.addOperation(fetchOperation1)
-            self.operationQueue.addOperation(fetchOperation2)
+            for i in  1 ..< 50 {
+                let fetchOperation : SRBlockFetchOperation = SRBlockFetchOperation { (data, state) in
+                      print("End of first Op\(i)")
+                  }
+                blockOp.addDependency(fetchOperation)
+                self.operationQueue.addOperation(fetchOperation)
+            }
+               
+            blockOp.completionBlock = { [weak  self] in
+                print("End")
+                print("Operation Object Array == \(String(describing: self?.operationQueue.operations))")
+            }
+                       
             self.operationQueue.addOperation(blockOp)
 
             DispatchQueue.global(qos: .default).asyncAfter(deadline: (.now() + 5.0)) { [weak self]  in
-                self?.operationQueue.cancelAllOperations()
+                //self?.operationQueue.cancelAllOperations()
                 print("Operation Object Array at end == \(String(describing: self?.operationQueue.operations))")
                
             }
-           
                 
     }
     

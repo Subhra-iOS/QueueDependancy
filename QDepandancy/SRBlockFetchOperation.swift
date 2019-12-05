@@ -47,7 +47,7 @@ final class SRBlockFetchOperation: AsyncOperation {
             self.dataFetched = data
             print("Fetch Op End")
             self.fetchCompletionHandler?(self.dataFetched , true)
-            //self.finished()
+            self.finished()
         }
         dataTask?.resume()
     }
