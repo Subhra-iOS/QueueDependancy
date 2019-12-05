@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    //private var blockOp : SRBlockOperation?
+    
     private lazy var operationQueue : OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = OperationQueue.defaultMaxConcurrentOperationCount
@@ -19,19 +21,85 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        startOperations()
-        //startBlockOperation()
+       // startOperations()
+       // startBlockOperation()
+        //self.blockOp = SRBlockOperation()
+        startBlockExecuteOperation()
+    }
+    
+        private func startBlockExecuteOperation(){
+                
+                let blockOp = SRBlockOperation()
+                
+                let fetchOperation1 : SRBlockFetchOperation = SRBlockFetchOperation { (data, state) in
+                   print("End of first Op1")
+               }
+                let fetchOperation2 : SRBlockFetchOperation = SRBlockFetchOperation { (data, state) in
+                    print("End of first Op2")
+                }
+                
+                blockOp.addDependency(fetchOperation1)
+                blockOp.addDependency(fetchOperation2)
+        
+                blockOp.completionBlock = { [weak  self] in
+                    print("End")
+                    print("Operation Object Array == \(String(describing: self?.operationQueue.operations))")
+                }
+           
+            self.operationQueue.addOperation(fetchOperation1)
+            self.operationQueue.addOperation(fetchOperation2)
+            self.operationQueue.addOperation(blockOp)
+
+            DispatchQueue.global(qos: .default).asyncAfter(deadline: (.now() + 5.0)) { [weak self]  in
+                self?.operationQueue.cancelAllOperations()
+                print("Operation Object Array at end == \(String(describing: self?.operationQueue.operations))")
+               
+            }
+           
+                
     }
     
     private func startBlockOperation(){
         
         let blockOp = SRBlockOperation()
-        blockOp.addExecutionBlock {
-            print("Execute Block Op")
+        blockOp.addExecutionBlock { [/*weak blockOp ,*/ weak  self] in
+            //print("Execute Block Op")
+            let fetchOperation : FetchOperation = FetchOperation()
+            self?.operationQueue.addOperation(fetchOperation)
+          /*  for i in 0 ..< 1000 {
+                if let operation = blockOp, operation.isCancelled {
+                    print("Cancelled")
+                     break
+                }
+                print(i)
+            }*/
         }
+        
+        blockOp.completionBlock = {
+            print("End")
+        }
+        
+        blockOp.addExecutionBlock {  [/*weak blockOp ,*/ weak  self]   in
             
+            let fetchOperation : FetchOperation = FetchOperation()
+            self?.operationQueue.addOperation(fetchOperation)
+           /* for i in 0 ..< 1000 {
+                if let operation = blockOp, operation.isCancelled {
+                    print("Cancelled")
+                     break
+                }
+                print(i)
+            }*/
+        }
+        
         self.operationQueue.addOperation(blockOp)
-        self.operationQueue.cancelAllOperations()
+        
+        
+//        DispatchQueue.global(qos: .default).asyncAfter(deadline: (.now())) { [weak self]  in
+//
+//            self?.operationQueue.cancelAllOperations()
+//
+//        }
         
     }
 
@@ -90,14 +158,14 @@ class ViewController: UIViewController {
 //        print("End2*1 == \(String(describing: self.operationQueue.operationCount))")
         
 //        DispatchQueue.global(qos: .default).asyncAfter(deadline: .now()) { [weak  self]  in
-//            
+//
 //            print("End1 == \(String(describing: self?.operationQueue.operationCount))")
 //            print("End1 == \(String(describing: self?.operationQueue.operations))")
 //            self?.operationQueue.cancelAllOperations()
 //           print("End2 == \(String(describing: self?.operationQueue.operationCount))")
 //           print("End2 == \(String(describing: self?.operationQueue.operations))")
 //           print("End2*1 == \(String(describing: self?.operationQueue.operationCount))")
-//            
+//
 //        }
         
     }
