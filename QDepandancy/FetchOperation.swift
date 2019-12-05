@@ -33,6 +33,7 @@ final class FetchOperation: AsyncOperation {
             }
 
             self.dataFetched = data
+            print("Fetch Op End")
             self.finished()
         }
         dataTask?.resume()

@@ -23,42 +23,58 @@ class ViewController: UIViewController {
     }
 
     private func startOperations(){
+//        let fetchOperation1 : FetchOperation = FetchOperation()
+//        let fetchOperation2 : FetchOperation = FetchOperation()
+//        let fetchOperation3 : FetchOperation = FetchOperation()
+//        let fetchOperation4 : FetchOperation = FetchOperation()
+        
         let fetchOperation : FetchOperation = FetchOperation()
         let parseOperation : ParseOperation = ParseOperation()
         
         parseOperation.setCompletionCallback { [weak self] status in
-            
             if status{
                 print("\(String(describing: self?.operationQueue.operationCount))")
                 print("\(String(describing: self?.operationQueue.operations))")
             }
-            
         }
-        
         
         let adapter = BlockOperation { [ unowned parseOperation ,  unowned fetchOperation] in
             print("Execute")
             parseOperation.setFetchDataWith(data: fetchOperation.dataFetched)
         }
-        
+                
 //        let completionBlock = BlockOperation {
 //            print("This is complete")
 //        }
+//
+//        completionBlock.addExecutionBlock({ [unowned completionBlock] in
+//            for i in 0 ..< 10000 {
+//                if completionBlock.isCancelled {
+//                    print("Cancelled")
+//                     break
+//                }
+//                print(i)
+//            }
+//        })
         
         adapter.addDependency(fetchOperation)
         parseOperation.addDependency(adapter)
         
-       /* completionBlock.addDependency(fetchOperation)
-        completionBlock.addDependency(adapter)
-        completionBlock.addDependency(parseOperation)*/
+//        completionBlock.addDependency(fetchOperation1)
+//        completionBlock.addDependency(fetchOperation2)
+//        completionBlock.addDependency(fetchOperation3)
+//        completionBlock.addDependency(fetchOperation4)
+//
         
         operationQueue.addOperations([fetchOperation, adapter, parseOperation], waitUntilFinished: false)
+       // operationQueue.addOperations([fetchOperation1, fetchOperation2, fetchOperation3, fetchOperation4], waitUntilFinished: false)
         
-        /*print("End1 == \(String(describing: self.operationQueue.operationCount))")
-        print("End1 == \(String(describing: self.operationQueue.operations))")
-        operationQueue.cancelAllOperations()
-        print("End2 == \(String(describing: self.operationQueue.operationCount))")
-        print("End2 == \(String(describing: self.operationQueue.operations))")*/
+//        print("End1 == \(String(describing: self.operationQueue.operationCount))")
+//        print("End1 == \(String(describing: self.operationQueue.operations))")
+//        operationQueue.cancelAllOperations()
+//        print("End2 == \(String(describing: self.operationQueue.operationCount))")
+//        print("End2 == \(String(describing: self.operationQueue.operations))")
+//        print("End2*1 == \(String(describing: self.operationQueue.operationCount))")
         
     }
 
