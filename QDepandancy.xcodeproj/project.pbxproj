@@ -16,6 +16,7 @@
 		2A6CB616239782DB00811408 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6CB614239782DB00811408 /* AsyncOperation.swift */; };
 		2A6CB617239782DB00811408 /* FetchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6CB615239782DB00811408 /* FetchOperation.swift */; };
 		2A6CB619239785F200811408 /* ParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6CB618239785F200811408 /* ParseOperation.swift */; };
+		2A92076A23990899006C297A /* SRBlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A92076923990899006C297A /* SRBlockOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		2A6CB614239782DB00811408 /* AsyncOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		2A6CB615239782DB00811408 /* FetchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchOperation.swift; sourceTree = "<group>"; };
 		2A6CB618239785F200811408 /* ParseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseOperation.swift; sourceTree = "<group>"; };
+		2A92076923990899006C297A /* SRBlockOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRBlockOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				2A6CB614239782DB00811408 /* AsyncOperation.swift */,
 				2A6CB615239782DB00811408 /* FetchOperation.swift */,
 				2A6CB618239785F200811408 /* ParseOperation.swift */,
+				2A92076923990899006C297A /* SRBlockOperation.swift */,
 				2A6CB606239782B600811408 /* Main.storyboard */,
 				2A6CB609239782B800811408 /* Assets.xcassets */,
 				2A6CB60B239782B800811408 /* LaunchScreen.storyboard */,
@@ -149,6 +152,7 @@
 			files = (
 				2A6CB605239782B600811408 /* ViewController.swift in Sources */,
 				2A6CB601239782B600811408 /* AppDelegate.swift in Sources */,
+				2A92076A23990899006C297A /* SRBlockOperation.swift in Sources */,
 				2A6CB616239782DB00811408 /* AsyncOperation.swift in Sources */,
 				2A6CB619239785F200811408 /* ParseOperation.swift in Sources */,
 				2A6CB603239782B600811408 /* SceneDelegate.swift in Sources */,

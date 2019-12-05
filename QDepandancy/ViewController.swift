@@ -20,6 +20,19 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         startOperations()
+        //startBlockOperation()
+    }
+    
+    private func startBlockOperation(){
+        
+        let blockOp = SRBlockOperation()
+        blockOp.addExecutionBlock {
+            print("Execute Block Op")
+        }
+            
+        self.operationQueue.addOperation(blockOp)
+        self.operationQueue.cancelAllOperations()
+        
     }
 
     private func startOperations(){
@@ -38,7 +51,7 @@ class ViewController: UIViewController {
             }
         }
         
-        let adapter = BlockOperation { [ unowned parseOperation ,  unowned fetchOperation] in
+        let adapter = SRBlockOperation { [ unowned parseOperation ,  unowned fetchOperation] in
             print("Execute")
             parseOperation.setFetchDataWith(data: fetchOperation.dataFetched)
         }
@@ -75,6 +88,17 @@ class ViewController: UIViewController {
 //        print("End2 == \(String(describing: self.operationQueue.operationCount))")
 //        print("End2 == \(String(describing: self.operationQueue.operations))")
 //        print("End2*1 == \(String(describing: self.operationQueue.operationCount))")
+        
+//        DispatchQueue.global(qos: .default).asyncAfter(deadline: .now()) { [weak  self]  in
+//            
+//            print("End1 == \(String(describing: self?.operationQueue.operationCount))")
+//            print("End1 == \(String(describing: self?.operationQueue.operations))")
+//            self?.operationQueue.cancelAllOperations()
+//           print("End2 == \(String(describing: self?.operationQueue.operationCount))")
+//           print("End2 == \(String(describing: self?.operationQueue.operations))")
+//           print("End2*1 == \(String(describing: self?.operationQueue.operationCount))")
+//            
+//        }
         
     }
 
